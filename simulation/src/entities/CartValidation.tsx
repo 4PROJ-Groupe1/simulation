@@ -1,10 +1,10 @@
 import React from 'react';
-import Collider, { TriggerEvent } from '../@core/Collider';
-import GameObject, { GameObjectProps } from '../@core/GameObject';
-import Sprite from '../@core/Sprite';
-import useGameObject from '../@core/useGameObject';
-import useGameObjectEvent from '../@core/useGameObjectEvent';
-import spriteData from '../spriteData';
+import Collider, { TriggerEvent } from '../../@core/Collider';
+import GameObject, { GameObjectProps } from '../../@core/GameObject';
+import Sprite from '../../@core/Sprite';
+import useGameObject from '../../@core/useGameObject';
+import useGameObjectEvent from '../../@core/useGameObjectEvent';
+import spriteData from '../../spriteData';
 
 function DisableOnTriggerScript() {
     const { getRef } = useGameObject();
