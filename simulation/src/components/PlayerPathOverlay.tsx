@@ -25,7 +25,6 @@ export default function PlayerPathOverlay({
     const findPath = usePathfinding();
     const [pointerPath, setPointerPath] = useState([]);
 
-    // update on pointer change
     useEffect(() => {
         if (path.length || !pathVisible) return;
         const nextPath = findPath({
@@ -42,7 +41,6 @@ export default function PlayerPathOverlay({
     if (pathVisible) {
         renderedPath = path.length
             ? path.map(({ x, y }, index) => (
-                  // eslint-disable-next-line react/jsx-indent
                   <group key={`${x}-${y}`} position={[x, y, offsetZ]}>
                       <Graphic
                           {...spriteData.ui}
@@ -53,7 +51,6 @@ export default function PlayerPathOverlay({
                   </group>
               ))
             : pointerPath.map(({ x, y }) => (
-                  // eslint-disable-next-line react/jsx-indent
                   <group key={`${x}-${y}`} position={[x, y, offsetZ]}>
                       <Graphic {...spriteData.ui} state="dot" opacity={0.25} basic />
                   </group>

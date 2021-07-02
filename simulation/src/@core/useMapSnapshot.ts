@@ -20,7 +20,6 @@ export default function useMapSnapshot() {
                 snapshot[y] = snapshot[y] || [];
                 for (let x = 0; x < mapWidth; x += 1) {
                     snapshot[y][x] = testCollision({ x, y }) ? WALKABLE : BLOCKED;
-                    // allow destination to be walkable, if it is interactable
                     if (destination != null) {
                         if (x === destination.x && y === destination.y) {
                             snapshot[y][x] = testInteractable({ x, y })

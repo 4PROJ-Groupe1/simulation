@@ -21,7 +21,6 @@ interface Props {
 
 export default function TileMap({ data, resolver, definesMapSize = false }: Props) {
     const { setMapSize, publish } = useGame();
-    // const [mapData, setMapData] = useState([]);
     const mapData = useMemo(() => data.slice().reverse(), [data]);
 
     useEffect(() => {

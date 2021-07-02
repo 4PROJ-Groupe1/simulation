@@ -82,10 +82,6 @@ function Persistence() {
         },
         stored => {
             const self = getRef();
-            // TODO: make peristence of position optional
-            //   (the position of one-time enemies like bosses should not be persisted)
-            // self.transform.setX(stored.x);
-            // self.transform.setY(stored.y);
             self.setDisabled(stored.disabled);
         }
     );
@@ -171,7 +167,6 @@ export default function GameObject({
         ...registryUtils,
     };
 
-    // TODO: add constants for z indices
     let offsetZ = 0;
     if (layer === 'ground') offsetZ = -1;
     if (layer === 'ground-decal') offsetZ = 0.1;

@@ -27,7 +27,6 @@ export default function Interactable() {
     const canInteract = useRef(true);
 
     useComponentRegistry<InteractableRef>('Interactable', {
-        // this is executed on the game object that *initiates* an interaction
         async interact({ x, y }) {
             const interactables = findGameObjectsByXY(x, y)
                 .map(obj => obj.getComponent<InteractableRef>('Interactable'))
@@ -42,7 +41,6 @@ export default function Interactable() {
             publish<DidInteractEvent>('did-interact', { x, y });
             return true;
         },
-        // this is executed on the game object that *receives* an interaction
         async onInteract(gameObject) {
             if (canInteract.current) {
                 canInteract.current = false;

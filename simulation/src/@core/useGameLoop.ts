@@ -5,7 +5,7 @@ import useGameObject from './useGameObject';
 
 export default function useGameLoop(callback: FrameRequestCallback, condition = true) {
     const { paused } = useGame();
-    const { getRef } = useGameObject() || {}; // optional
+    const { getRef } = useGameObject() || {};
     const active = useRef(false);
     const callbackRef = useRef<FrameRequestCallback>();
     callbackRef.current = callback;
@@ -13,7 +13,7 @@ export default function useGameLoop(callback: FrameRequestCallback, condition = 
     if (getRef && getRef().disabled) active.current = false;
 
     useFrame(({ clock }) => {
-        const time = clock.oldTime; // clock.elapsedTime / 1000;
+        const time = clock.oldTime;
 
         if (active.current) {
             callback(time);

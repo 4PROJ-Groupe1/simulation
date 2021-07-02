@@ -15,18 +15,16 @@ export default function useCollisionTest({
     hit = false,
 }: CollisionTestOptions = {}) {
     const { findGameObjectsByXY } = useGame();
-    const { id } = useGameObject() || {}; // optional
+    const { id } = useGameObject() || {};
 
     return useCallback(
         (position: Position) => {
             const { x, y } = position;
             const gameObjectsAtXY = findGameObjectsByXY(x, y);
 
-            // no object at position is considered out of bounds
             if (!gameObjectsAtXY.length) return false;
 
             return gameObjectsAtXY.every(gameObject => {
-                // skip own collider
                 if (gameObject.id === id) return true;
 
                 const collider = gameObject.getComponent<ColliderRef>('Collider');

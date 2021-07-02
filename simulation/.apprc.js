@@ -12,7 +12,7 @@ module.exports = {
                 'no-param-reassign': 'off',
                 'no-await-in-loop': 'off',
                 'no-restricted-syntax': 'off',
-                'no-use-before-define': 'off', // using ts rule instead
+                'no-use-before-define': 'off',
                 'no-continue': 'off',
                 'no-plusplus': 'off',
                 'no-bitwise': 'off',

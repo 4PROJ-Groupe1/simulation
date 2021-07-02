@@ -131,7 +131,6 @@ export default function Moveable({ isStatic = false }: Props) {
 
     useEffect(() => {
         const node = nodeRef.current;
-        // clean up running animation
         return () => anime.remove(node.position);
     }, [nodeRef]);
 

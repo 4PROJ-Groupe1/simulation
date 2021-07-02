@@ -42,7 +42,7 @@ export default function Collider({ isTrigger = false }: Props) {
 
     useGameObjectEvent<DidChangePositionEvent>('did-change-position', ({ x, y }) => {
         findGameObjectsByXY(x, y)
-            .filter(obj => obj.id !== id) // skip self
+            .filter(obj => obj.id !== id)
             .map(obj => obj.getComponent<ColliderRef>('Collider'))
             .forEach(collider => collider?.onTrigger(getRef()));
     });
@@ -50,7 +50,7 @@ export default function Collider({ isTrigger = false }: Props) {
     useGameObjectEvent<DidChangePositionEvent>('did-change-position', nextPosition => {
         const { x, y } = prevPosition.current;
         findGameObjectsByXY(x, y)
-            .filter(obj => obj.id !== id) // skip self
+            .filter(obj => obj.id !== id)
             .map(obj => obj.getComponent<ColliderRef>('Collider'))
             .forEach(collider => collider?.onTriggerExit(getRef()));
         prevPosition.current = nextPosition;
@@ -59,7 +59,6 @@ export default function Collider({ isTrigger = false }: Props) {
     useComponentRegistry<ColliderRef>('Collider', {
         walkable,
         setWalkable,
-        // deprecated, not in use
         canCrossEdge() {
             return true;
         },

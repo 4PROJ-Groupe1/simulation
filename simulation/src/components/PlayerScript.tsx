@@ -19,7 +19,6 @@ export default function PlayerScript() {
     const [path, setPath] = useState<Position[]>([]);
     const [pathOverlayEnabled, setPathOverlayEnabled] = useState(true);
 
-    // key controls
     const leftKey = useKeyPress(['ArrowLeft', 'a']);
     const rightKey = useKeyPress(['ArrowRight', 'd']);
     const upKey = useKeyPress(['ArrowUp', 'w']);
@@ -31,20 +30,13 @@ export default function PlayerScript() {
             y: Number(upKey) - Number(downKey),
         };
         const nextPosition = tileUtils(transform).add(direction);
-        // is same position?
         if (tileUtils(nextPosition).equals(transform)) return;
 
-        // is already moving?
         if (!getComponent<MoveableRef>('Moveable').canMove()) return;
 
-        // will cut corner?
         const horizontal = { ...transform, x: nextPosition.x };
         const vertical = { ...transform, y: nextPosition.y };
-        const canCross =
-            direction.x !== 0 && direction.y !== 0
-                ? // test diagonal movement
-                  testCollision(horizontal) && testCollision(vertical)
-                : true;
+        const canCross = direction.x !== 0 && direction.y !== 0 ? testCollision(horizontal) && testCollision(vertical) : true;
 
         if (canCross) {
             setPath([nextPosition]);
@@ -52,7 +44,6 @@ export default function PlayerScript() {
         }
     });
 
-    // mouse controls
     const pointer = usePointer();
 
     usePointerClick(event => {
@@ -65,13 +56,11 @@ export default function PlayerScript() {
                 setPath(nextPath);
                 setPathOverlayEnabled(true);
             } catch {
-                // pointer out of bounds
                 setPath([]);
             }
         }
     });
 
-    // walk the path
     useEffect(() => {
         if (!path.length) return;
 
@@ -80,13 +69,12 @@ export default function PlayerScript() {
         (async () => {
             const anyAction =
                 (await getComponent<MoveableRef>('Moveable')?.move(nextPosition)) ||
-                (path.length === 1 && // try interaction on last step of path
+                (path.length === 1 &&
                     (await getComponent<InteractableRef>('Interactable')?.interact(
                         nextPosition
                     )));
 
             if (anyAction) {
-                // proceed with next step in path
                 setPath(current => current.slice(1));
             }
         })();

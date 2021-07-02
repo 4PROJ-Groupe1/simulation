@@ -39,7 +39,6 @@ export default function CharacterScript({ children }: Props) {
     const movementCount = useRef(0);
     const movementActive = useRef(false);
 
-    // flip sprite in the current moving direction
     const faceDirection = useCallback(
         ({ x, y }: Position): MoveDirection => {
             const sprite = getComponent<SpriteRef>('Sprite');
@@ -51,7 +50,6 @@ export default function CharacterScript({ children }: Props) {
         [transform, getComponent]
     );
 
-    // wobble effect while moving
     const wobble = useCallback(() => {
         if (movementActive.current) {
             movementCount.current += 0.1;
@@ -75,10 +73,8 @@ export default function CharacterScript({ children }: Props) {
         }
     }, []);
 
-    // face direction
     useGameObjectEvent<AttemptMoveEvent>('attempt-move', faceDirection, [faceDirection]);
 
-    // when character is about to move, enable wobble and footstep effect
     useGameObjectEvent<WillMoveEvent>(
         'will-move',
         () => {
@@ -98,7 +94,6 @@ export default function CharacterScript({ children }: Props) {
         [transform]
     );
 
-    // bounce animation while moving
     useGameObjectEvent<MovingEvent>(
         'moving',
         ({ currentPosition, nextPosition, direction, facingDirection }) => {
@@ -113,10 +108,8 @@ export default function CharacterScript({ children }: Props) {
             else if (dirY !== 0) delta = (y - nextPosition.y) * -facingDirection;
 
             if (delta > 0) {
-                // left/up
                 delta = delta > 0.5 ? 1 - delta : delta;
             } else if (delta < 0) {
-                // right/down
                 delta = delta < -0.5 ? -1 - delta : delta;
             }
             bounce = Math.abs(delta / sizeDivider);
@@ -130,16 +123,12 @@ export default function CharacterScript({ children }: Props) {
     });
 
     useGameLoop(time => {
-        // apply wobbling animation
         wobble();
 
-        // apply breathe animation
         if (!movementActive.current) {
-            // breathe animation while standing still
             const breathIntensity = 20;
             scaleRef.current.scale.setY(1 + Math.sin(time / 240) / breathIntensity);
         } else {
-            // no breathe animation while moving
             scaleRef.current.scale.setY(1);
         }
     });

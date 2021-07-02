@@ -8,7 +8,7 @@ export default function useKeyActions(
     enabledWhenPaused = false
 ) {
     const map = useRef(keyMap);
-    const { paused } = useGame() || {}; // optional
+    const { paused } = useGame() || {};
     map.current = keyMap;
 
     const handleKey = useCallback(

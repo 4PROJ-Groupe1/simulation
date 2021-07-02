@@ -49,7 +49,6 @@ interface Props {
     children: React.ReactNode;
 }
 
-// max ms delay between scene init and ready events
 const sceneReadyTimeout = 1000;
 
 export default function Scene({ id, children }: Props) {
@@ -66,7 +65,6 @@ export default function Scene({ id, children }: Props) {
 
     const initEvents = useCallback(async () => {
         await publish<SceneInitEvent>('scene-init', id);
-        // ensure everything is ready on next idle callback
         idleCallback.current = window.requestIdleCallback(
             () => {
                 publish<SceneReadyEvent>('scene-ready', id);
@@ -89,7 +87,6 @@ export default function Scene({ id, children }: Props) {
                     });
                 };
             },
-            // pass through from scene manager
             currentScene,
             currentLevel,
             prevLevel,
@@ -115,23 +112,19 @@ export default function Scene({ id, children }: Props) {
 
     useEffect(() => {
         if (currentScene === id) {
-            // entering scene
             initEvents();
         } else {
-            // leaving scene
             setInstances([]);
         }
         return () => window.cancelIdleCallback(idleCallback.current);
     }, [currentScene, id, initEvents]);
 
-    // skip rendering scene content
     if (!currentScene.startsWith(id)) return null;
 
     return (
         <SceneContext.Provider value={contextValue}>
             <LevelContext.Provider value={levelContextValue}>
                 <group>
-                    {/* just to ensure node.parent in a GO still remains within the scene */}
                     <group>
                         <>{children}</>
                         <>{instances}</>

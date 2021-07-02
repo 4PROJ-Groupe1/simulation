@@ -8,8 +8,6 @@ export interface SoundProps {
     onStop?: () => void;
 }
 
-// handle "DOMException: play() failed because the user didn't interact with the document first."
-// see: https://stackoverflow.com/questions/49930680
 let canPlayAudio = false;
 function handleCanPlay() {
     canPlayAudio = true;
@@ -26,7 +24,7 @@ export function useSound({ src, loop = false, volume = 1, onStop }: SoundProps) 
     const source = useMemo(() => pickSrc(src), [src]);
     const audio = useAsset(source) as HTMLAudioElement;
 
-    const instance = audio; // .cloneNode() as HTMLAudioElement;
+    const instance = audio;
     instance.currentTime = 0;
     instance.loop = loop;
     instance.volume = volume;
@@ -36,7 +34,6 @@ export function useSound({ src, loop = false, volume = 1, onStop }: SoundProps) 
         return () => {
             instance.removeEventListener('ended', onStop);
             if (instance.loop) {
-                // TODO: fade out
                 instance.pause();
             }
         };
@@ -44,8 +41,6 @@ export function useSound({ src, loop = false, volume = 1, onStop }: SoundProps) 
 
     const play = useCallback(() => {
         if (canPlayAudio) {
-            // catch possible abort error.
-            // see: https://developers.google.com/web/updates/2017/06/play-request-was-interrupted
             instance.play().catch(() => {});
         }
     }, [instance]);
@@ -56,7 +51,6 @@ export function useSound({ src, loop = false, volume = 1, onStop }: SoundProps) 
 export default function Sound(props: SoundProps) {
     const play = useSound(props);
     useEffect(() => {
-        // fix for playing sound on disabled GOs
         const timeout = setTimeout(play, 10);
         return () => clearTimeout(timeout);
     }, [play]);

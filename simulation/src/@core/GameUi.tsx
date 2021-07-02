@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function GameUi({ children }: Props) {
-    const gameContextValue = useGame(); // forwarded to dom reconciler
+    const gameContextValue = useGame();
 
     return (
         <HTML eps={1} zIndexRange={[0, 0]}>

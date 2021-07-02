@@ -84,32 +84,24 @@ export default function Game({
     const registryUtils = useMemo<GameObjectRegistryUtils>(
         () => ({
             registerGameObject(identifier, ref) {
-                // register by id
                 registryById.set(identifier, ref);
-                // register by name
                 registryByName.set(ref.name, ref);
-                // register by x, y
                 const { transform } = ref;
                 const xy = `${transform.x},${transform.y}`;
                 const xyList = registryByXY.get(xy) || [];
                 xyList.push(ref);
                 registryByXY.set(xy, xyList);
-                // register by layer
                 const layerList = registryByLayer.get(ref.layer) || [];
                 layerList.push(ref);
                 registryByLayer.set(ref.layer, layerList);
             },
             unregisterGameObject(identifier, ref) {
-                // unregister by id
                 registryById.delete(identifier);
-                // unregister by name
                 registryByName.delete(ref.name);
-                // unregister by x, y
                 const { transform } = ref;
                 const xy = `${transform.x},${transform.y}`;
                 const xyList = registryByXY.get(xy);
                 xyList?.splice(xyList.indexOf(ref), 1);
-                // unregister by layer
                 const layerList = registryByLayer.get(ref.layer);
                 layerList?.splice(layerList.indexOf(ref), 1);
             },

@@ -171,7 +171,7 @@ class TileClass implements TileLike {
 
     lineTo(t: TileLike) {
         const results: TileClass[] = [];
-        const precision = 1.5; // 1 appeared to be too low here
+        const precision = 1.5;
         const probes = this.floatDistance(t) * precision;
         const step = 1 / Math.max(probes, 1);
         for (let i = 0; i <= probes; i += 1) {

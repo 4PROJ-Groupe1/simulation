@@ -46,7 +46,6 @@ export function mapDataString(str: string): TileMapData {
     const data = [];
     let line = -1;
     let string = str;
-    // strip any break at the end
     if (string[string.length - 1] === lineBreak) {
         string = string.slice(0, -1);
     }
@@ -64,7 +63,7 @@ export function mapDataString(str: string): TileMapData {
 export function injectMapData(
     source: TileMapData,
     data: TileMapData,
-    { x, y }: Position // bottom left
+    { x, y }: Position
 ) {
     data.forEach((row, indexY, { length }) => {
         row.forEach((col, indexX) => {

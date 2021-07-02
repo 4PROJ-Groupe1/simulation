@@ -12,8 +12,6 @@ export default function createPubSub() {
         const handlers = events[name];
         if (handlers == null) return false;
 
-        // make snapshot of handlers, to prevent inbetween unsubscribe calls
-        // from mutating this array.
         await Promise.all(handlers.slice().map(handler => handler(data)));
         return true;
     }
@@ -51,7 +49,6 @@ export default function createPubSub() {
     return {
         publish,
         subscribe,
-        // unsubscribe,
         hasSubscriptions,
     };
 }

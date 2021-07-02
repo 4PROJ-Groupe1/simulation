@@ -60,7 +60,6 @@ export default function ScenePortal({
         api.port();
     });
 
-    // set position of target game object to this portal
     useGameEvent<SceneInitEvent>(
         'scene-init',
         () => {
@@ -72,14 +71,12 @@ export default function ScenePortal({
             portedObj.transform.setX(transform.x);
             portedObj.transform.setY(transform.y);
 
-            // update camera position
             camera.position.setX(nodeRef.current.position.x);
             camera.position.setY(nodeRef.current.position.y);
         },
         [name, transform]
     );
 
-    // move target game object in enter direction
     useGameEvent<SceneReadyEvent>(
         'scene-ready',
         () => {
@@ -97,7 +94,6 @@ export default function ScenePortal({
                 .getComponent<MoveableRef>('Moveable')
                 .move({ x: transform.x + enterX, y: transform.y + enterY });
 
-            // reset game state
             setGameState(targetPortalKey, null);
             setGameState(portedGameObjectKey, null);
         },

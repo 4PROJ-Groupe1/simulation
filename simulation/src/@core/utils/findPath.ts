@@ -8,7 +8,6 @@ interface PathOptions {
     map: number[][];
 }
 
-// eslint-disable-next-line new-cap
 const easystar = new EasyStar.js();
 easystar.setAcceptableTiles([WALKABLE]);
 easystar.enableDiagonals();
@@ -23,7 +22,6 @@ export default function findPath({ from, to, map }: PathOptions) {
             if (path != null) result = path.slice(1);
         });
     } catch {
-        // possibly out of range
     }
     easystar.calculate();
     return result;

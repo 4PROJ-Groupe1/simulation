@@ -5,7 +5,7 @@ import Game from './@core/Game';
 import Scene from './@core/Scene';
 import SceneManager from './@core/SceneManager';
 import useWindowSize from './@core/useWindowSize';
-import OfficeScene from './scenes/OfficeScene';
+import SuperMarket from './SuperMarket';
 import spriteData from './spriteData';
 import globalStyles from './styles/global';
 
@@ -21,7 +21,6 @@ const styles = {
 
 const urls = [
     ...Object.values(spriteData).map(data => data.src),
-    // flatten
 ].reduce<string[]>((acc, val) => acc.concat(val), []);
 
 export default function App() {
@@ -35,7 +34,7 @@ export default function App() {
                     <AssetLoader urls={urls} placeholder="Loading assets ...">
                         <SceneManager defaultScene="office">
                             <Scene id="office">
-                                <OfficeScene />
+                                <SuperMarket />
                             </Scene>
                         </SceneManager>
                     </AssetLoader>

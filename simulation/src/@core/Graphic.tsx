@@ -25,11 +25,9 @@ export interface GraphicProps {
     onIteration?: () => void;
 }
 
-// create geometry once and reuse
 const geometry = new THREE.PlaneBufferGeometry(1, 1);
 
 export default memo(
-    /* eslint-disable react/prop-types */
     forwardRef<THREE.Object3D, GraphicProps>(function Graphic(
         {
             src,
@@ -53,7 +51,6 @@ export default memo(
         ref
     ) {
         if (!sheet[state]) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `Sprite state '${state}' does not exist in sheet '${src}':`,
                 Object.keys(sheet)
@@ -80,7 +77,6 @@ export default memo(
             textureRef.current.offset.setY(textureOffsetY);
         }, [firstFrame, frameHeight, frameWidth, image, textureRef]);
 
-        // initial frame update
         useEffect(() => handleFrameUpdate(), [handleFrameUpdate]);
 
         useGameLoop(time => {
@@ -102,7 +98,6 @@ export default memo(
 
         const iterationCallback = useRef<typeof onIteration>();
         iterationCallback.current = onIteration;
-        // call onIteration on cleanup
         useEffect(
             () => () => {
                 mounted.current = false;

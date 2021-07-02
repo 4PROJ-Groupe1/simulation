@@ -4,11 +4,11 @@ import Collider from "../../@core/Collider";
 import spriteData from "../../spriteData";
 import Sprite from "../../@core/Sprite";
 
-export default function WallVerticalTopRight(props: GameObjectProps) {
+export default function WallCornerLeft(props: GameObjectProps) {
     return (
         <GameObject x={props.x} y={props.y} layer="wall">
             <Collider />
-            <Sprite {...spriteData.objects} state="wallVerticalTopRight" />
+            <Sprite {...spriteData.objects} state="wallCornerLeft" />
         </GameObject>
     );
 }

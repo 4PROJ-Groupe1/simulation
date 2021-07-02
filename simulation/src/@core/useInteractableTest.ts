@@ -6,14 +6,13 @@ import useGameObject from './useGameObject';
 
 export default function useInteractableTest() {
     const { findGameObjectsByXY } = useGame();
-    const { id } = useGameObject() || {}; // optional
+    const { id } = useGameObject() || {};
 
     return useCallback(
         (position: Position) => {
             const { x, y } = position;
 
             return findGameObjectsByXY(x, y).some(gameObject => {
-                // skip own collider
                 if (gameObject.id === id) return false;
 
                 const interactable = gameObject.getComponent<InteractableRef>(

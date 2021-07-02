@@ -24,7 +24,6 @@ interface Props {
 
 export default function SceneManager({ defaultScene, children }: Props) {
     const { publish } = useGame();
-    // support scene string format: 'sceneId:level'
     const [initialScene, initialLevel = 0] = defaultScene.split(':');
     const [currentScene, setScene] = useState(initialScene);
     const prevLevel = useRef(-1);
@@ -36,17 +35,13 @@ export default function SceneManager({ defaultScene, children }: Props) {
             prevLevel: prevLevel.current,
             currentLevel: currentLevel.current,
             async setScene(nextScene) {
-                // eslint-disable-next-line prefer-const
                 let [targetScene, targetLevel = 0] = nextScene.split(':');
                 targetLevel = Number(targetLevel);
 
                 if (currentScene !== targetScene) {
-                    // switch scene
                     if (currentScene !== '') {
                         await publish<ScenePreExitEvent>('scene-pre-exit', currentScene);
                         await publish<SceneExitEvent>('scene-exit', currentScene);
-                        // always go to empty scene first and then to the target scene
-                        // (this should help clearing cached react components)
                         setScene('');
                         await waitForMs(100);
                     }
@@ -54,7 +49,6 @@ export default function SceneManager({ defaultScene, children }: Props) {
                     currentLevel.current = targetLevel;
                     setScene(targetScene);
                 } else if (currentLevel.current !== targetLevel) {
-                    // switch level
                     api.setLevel(targetLevel);
                 }
             },
@@ -69,10 +63,8 @@ export default function SceneManager({ defaultScene, children }: Props) {
                 const prevScene = currentScene;
                 const formerCurrentLevel = currentLevel.current;
                 const formerPrevLevel = prevLevel.current;
-                // switch to empty scene
                 await api.setScene('');
                 await waitForMs(100);
-                // restore prev scene + level
                 prevLevel.current = formerPrevLevel;
                 currentLevel.current = formerCurrentLevel;
                 setScene(prevScene);

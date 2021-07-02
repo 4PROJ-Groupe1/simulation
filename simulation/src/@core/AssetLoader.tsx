@@ -48,8 +48,6 @@ function loadAsset(url) {
     });
 }
 
-// define asset store in module scope, so it can be accessed
-// from both dom and webgl reconcilers.
 const assets: { current: AssetStore } = {
     current: {},
 };
@@ -69,7 +67,6 @@ export function AssetLoaderProvider({ children }: ProviderProps) {
 export default function AssetLoader({ urls: urlsProp, placeholder, children }: Props) {
     const [urls, setUrls] = useStateFromProp(urlsProp);
     const [count, setCount] = useState(0);
-    // const assets = useRef<AssetStore>({});
     const uniqueUrls = useRef<Set<string>>();
     uniqueUrls.current = new Set(urls);
     const timeout = useRef<NodeJS.Timeout>();
@@ -100,7 +97,6 @@ export default function AssetLoader({ urls: urlsProp, placeholder, children }: P
 
     useEffect(() => {
         if (process.env.NODE_ENV === 'development') {
-            // sometimes after WDS triggers a reload, not all assets are being reloaded here.
             const delay = 2000 + uniqueUrls.current.size * 100;
             timeout.current = setTimeout(() => {
                 setCount(0);
