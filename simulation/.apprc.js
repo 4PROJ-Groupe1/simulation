@@ -61,6 +61,9 @@ module.exports = {
                     }),
                 ],
             },
+            devServer: {
+              disableHostCheck: true
+            },
             plugins: (plugins = []) => {
                 if (config.options.devMode) {
                     plugins.push(new ReactRefreshPlugin({ disableRefreshCheck: true }));
