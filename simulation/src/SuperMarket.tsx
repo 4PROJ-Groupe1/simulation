@@ -619,7 +619,7 @@ function AddProductToCartScript(productId: any) {
             headers: { 'Content-Type': 'application/json' }
         };
 
-        fetch('https://api.brilliant-market.com/api/add-product', requestOptions);
+        fetch('https://api.brilliant-market.com/api/demo/add-product', requestOptions);
     });
 
     return null;
