@@ -798,7 +798,7 @@ function AddProductToCartScript(props: any) {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({'idRayon': props.idRayon, 'idLotProduit': props.idLotProduit, 'prix': props.prix, 'nomProduit': props.nomProduit, 'idProduit': props.idProduit, 'company': props.company})
+            body: JSON.stringify({'idRayon': props.props.idRayon, 'idLotProduit': props.props.idLotProduit, 'prix': props.props.prix, 'nomProduit': props.props.nomProduit, 'idProduit': props.props.idProduit, 'company': props.props.company})
         };
 
         fetch('https://api.brilliant-market.com/api/demo/add-product', requestOptions);
