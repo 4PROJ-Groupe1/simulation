@@ -18,7 +18,7 @@ function CarteValidationScript() {
                 headers: { 'Content-Type': 'application/json' }
             };
 
-            fetch('https://api.brilliant-market.com/api/cart-validation', requestOptions);
+            fetch('https://api.brilliant-market.com/api/demo/cart-validation', requestOptions);
         }
     });
 
